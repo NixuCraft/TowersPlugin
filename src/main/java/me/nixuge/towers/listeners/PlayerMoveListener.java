@@ -5,6 +5,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.nixuge.configurator.maths.Area;
@@ -15,12 +17,17 @@ import me.nixuge.towers.teams.TowersTeam;
 
 public class PlayerMoveListener implements Listener {
     // TODO?: bound checks
+    // Note: I really dislike using deprecated methods when there are alternatives available,
+    // BUT here it's used for the new EntityDamageEvent and the deprecated constructors are MUCH
+    // simpler than the non deprecated one, + this plugin is probably going to be 1.9.4 only.
+    @SuppressWarnings("deprecation") 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player p = event.getPlayer();
 
         Location to = event.getTo();
         if (to.getY() < 120) { // Bumped the limit a bit, was originally at 85. Might put in config.
+            p.setLastDamageCause(new EntityDamageEvent(p, DamageCause.FALL, 20));
             p.setHealth(0);
         }
 

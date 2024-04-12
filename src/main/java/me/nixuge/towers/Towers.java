@@ -9,7 +9,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import lombok.Getter;
-import lombok.val;
 import me.nixuge.towers.game.GameManager;
 import me.nixuge.towers.listeners.EnchantItemListener;
 import me.nixuge.towers.listeners.EntityDamageByEntityListener;
@@ -24,6 +23,7 @@ import me.nixuge.towers.listeners.PlayerMoveListener;
 import me.nixuge.towers.listeners.PlayerQuitListener;
 import me.nixuge.towers.listeners.PlayerRespawnListener;
 import me.nixuge.towers.player.PlayersManager;
+import me.nixuge.velocityhandler.VelocityHandler;
 import net.megavex.scoreboardlibrary.api.ScoreboardLibrary;
 import net.megavex.scoreboardlibrary.api.exception.NoPacketAdapterAvailableException;
 import net.megavex.scoreboardlibrary.api.noop.NoopScoreboardLibrary;
@@ -52,13 +52,7 @@ public class Towers extends JavaPlugin {
         gameManager = new GameManager(this);
         gameManager.startGame();
 
-        // Only for debugging purposes after a /rl - should ideally be removed.
-        Bukkit.getOnlinePlayers().forEach(p -> {
-            val towersP = PlayersManager.addPlayerRandomTeam(p);
-        });
-
-        PluginManager pluginManager = Bukkit.getPluginManager();
-        listeners.forEach(listener -> pluginManager.registerEvents(listener, this));
+        new VelocityHandler(this, "towersgame");
 
         try {
             scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(this);
@@ -66,6 +60,14 @@ public class Towers extends JavaPlugin {
             scoreboardLibrary = new NoopScoreboardLibrary();
             getLogger().warning("No scoreboard packet adapter available!");
         }
+
+        // Only for debugging purposes after a /rl - should ideally be removed.
+        Bukkit.getOnlinePlayers().forEach(p -> {
+            PlayersManager.addPlayerRandomTeam(p);
+        });
+
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        listeners.forEach(listener -> pluginManager.registerEvents(listener, this));
     }
 
     @Override

@@ -8,8 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import me.nixuge.towers.Towers;
 import me.nixuge.towers.player.PlayersManager;
@@ -42,11 +42,11 @@ public class PlayerDeathListener implements Listener {
 
         // Kinda dirty :/
         String message;
-        DamageCause cause = event.getEntity().getLastDamageCause().getCause();
-        if (cause == null) {
+        EntityDamageEvent lastDamageEvent = event.getEntity().getLastDamageCause();
+        if (lastDamageEvent == null) {
             message = "\u00A77 a \u00E9t\u00E9 tu\u00E9 par";
         } else {
-            switch (cause) {
+            switch (lastDamageEvent.getCause()) {
                 case BLOCK_EXPLOSION:
                     message = "\u00A77 a \u00E9t\u00E9 tu\u00E9 par";
                     break;

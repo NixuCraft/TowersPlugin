@@ -1,5 +1,3 @@
-
-
 ~ PlayerRespawn.java
 ~ InventoryClick.java (InventoryClickEvent)
 
@@ -9,9 +7,7 @@ ok - PlayerMove.java (PlayerMoveEvent)
 
 Not done:
 Goal armostand handling
-Better end
 Proper no chest yoink
-Scoreboard
 Chest cooldown (?)
 
 To redo/improve:
