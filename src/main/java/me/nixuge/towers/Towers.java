@@ -24,6 +24,9 @@ import me.nixuge.towers.listeners.PlayerMoveListener;
 import me.nixuge.towers.listeners.PlayerQuitListener;
 import me.nixuge.towers.listeners.PlayerRespawnListener;
 import me.nixuge.towers.player.PlayersManager;
+import net.megavex.scoreboardlibrary.api.ScoreboardLibrary;
+import net.megavex.scoreboardlibrary.api.exception.NoPacketAdapterAvailableException;
+import net.megavex.scoreboardlibrary.api.noop.NoopScoreboardLibrary;
 
 public class Towers extends JavaPlugin {
     private static final List<Listener> listeners = Arrays.asList(
@@ -39,6 +42,8 @@ public class Towers extends JavaPlugin {
     private static Towers instance;
     @Getter
     private static GameManager gameManager;
+    @Getter
+    private static ScoreboardLibrary scoreboardLibrary;
 
     @Override
     public void onEnable() {
@@ -54,6 +59,13 @@ public class Towers extends JavaPlugin {
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         listeners.forEach(listener -> pluginManager.registerEvents(listener, this));
+
+        try {
+            scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(this);
+        } catch (NoPacketAdapterAvailableException e) {
+            scoreboardLibrary = new NoopScoreboardLibrary();
+            getLogger().warning("No scoreboard packet adapter available!");
+        }
     }
 
     @Override

@@ -4,11 +4,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 
+import lombok.Getter;
 import lombok.Setter;
 import me.nixuge.configurator.maths.Area;
 import me.nixuge.towers.Towers;
+import me.nixuge.towers.scoreboard.ScoreboardSidebar;
 
 public class TeamPoints {
+    @Getter
     // private static final int MAX_POINTS = 3; // TODO: LOAD FROM CONFIG OR SOMEWHERE
     private static final int MAX_POINTS = 1; // TODO: LOAD FROM CONFIG OR SOMEWHERE
     private static final int SECONDS_BETWEEN_POINTS = 30;
@@ -18,6 +21,7 @@ public class TeamPoints {
     private TowersTeam team;
 
     private long lastPointTime;
+    @Getter
     private int points;
 
     public TeamPoints() {
@@ -36,6 +40,7 @@ public class TeamPoints {
             return false;
         
         this.points++;
+        ScoreboardSidebar.updateSidebars();
         if (this.points >= MAX_POINTS) {
             Towers.getGameManager().endGame(team);
             return true;

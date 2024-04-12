@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -67,7 +68,22 @@ public class ChestManager {
         return stack;
     }
 
-    public static void setChests() {
+    public static void setupChests() {
+        for (Entry<Location, ItemStack[]> entrySet : chests.entrySet()) {
+            Location loc = entrySet.getKey();
+            Block block = loc.getBlock();
+            if (block.getType() != Material.CHEST)
+                block.setType(Material.CHEST);
+
+            Chest chest = (Chest) block.getState();
+            ItemStack[] items = entrySet.getValue();
+            for (int i = 0; i < items.length; i++) {
+                chest.getInventory().setItem(i, items[i]);
+            }
+        }
+    }
+
+    public static void jankChestRefill() {
         for (val entry : chests.entrySet()) {
             val loc = entry.getKey();
             val inv = entry.getValue();

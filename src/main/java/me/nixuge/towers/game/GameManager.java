@@ -1,16 +1,23 @@
 package me.nixuge.towers.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.bukkit.scheduler.BukkitTask;
 
 import com.destroystokyo.paper.Title;
 
 import me.nixuge.towers.Towers;
 import me.nixuge.towers.player.PlayersManager;
+import me.nixuge.towers.runnable.TowerRunnable;
+import me.nixuge.towers.scoreboard.ScoreboardSidebar;
 import me.nixuge.towers.teams.TowersTeam;
 import me.nixuge.towers.utils.TextUtils;
+import me.nixuge.towers.world.ChestManager;
 import me.nixuge.towers.world.IronGenerator;
 import me.nixuge.velocityhandler.messages.PlayerSwitchServerMessage;
 import me.nixuge.velocityhandler.messages.ShutdownSelfMessage;
@@ -20,17 +27,25 @@ public class GameManager {
     
     private long startTime;
 
+    private List<BukkitTask> tasks;
+
     public GameManager(Towers plugin) {
         this.plugin = plugin;
+        this.tasks = new ArrayList<>();
     }
 
     public String getFormattedGameTime() {
-        return TextUtils.millisecondsToMMSSms(System.currentTimeMillis() - startTime);
+        return TextUtils.secondsToMMSS((int)((System.currentTimeMillis() - startTime) / 1000));
     }
 
     public void startGame() {
         this.startTime = System.currentTimeMillis();
-        new IronGenerator().runTaskTimer(plugin, 60, 60);
+
+        ChestManager.setupChests();
+        
+        tasks.add(new IronGenerator().runTaskTimer(plugin, 60, 60));
+
+        tasks.add(new TowerRunnable().runTaskTimer(plugin, 0, 20));
     }
     
     public void endGame() {
@@ -53,7 +68,17 @@ public class GameManager {
     }
 
     private void afterGameEnd() {
-        HandlerList.unregisterAll();
+        // Unregister all listeners
+        HandlerList.unregisterAll(); 
+
+        // Update scoreboard 1 last time
+        ScoreboardSidebar.updateSidebars();
+
+        // Stop tasks
+        tasks.forEach(task -> {
+            task.cancel();
+        });
+
         PlayersManager.getAllPlayers().forEach(towersP -> {
             Player p = towersP.getBukkitPlayer();
             p.setGameMode(GameMode.SPECTATOR);

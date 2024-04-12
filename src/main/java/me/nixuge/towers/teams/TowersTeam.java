@@ -3,8 +3,8 @@ package me.nixuge.towers.teams;
 import lombok.Getter;
 
 public enum TowersTeam {
-    BLUE("Blue", "\u00A73", TeamMap.getBlueMap(), new TeamPoints()),
-    RED("Red", "\u00A7c", TeamMap.getRedMap(), new TeamPoints());
+    RED("Red", "\u00A7c", TeamMap.getRedMap(), new TeamPoints()),
+    BLUE("Blue", "\u00A73", TeamMap.getBlueMap(), new TeamPoints());
 
     @Getter
     private final String displayName;
@@ -36,5 +36,9 @@ public enum TowersTeam {
             default:
                 return BLUE; // Stupid but required.
         }
+    }
+
+    public static TowersTeam[] getAllTeams() {
+        return values();
     }
 }

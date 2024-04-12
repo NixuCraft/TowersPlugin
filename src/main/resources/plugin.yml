@@ -1,3 +1,5 @@
 name: Towers
 version: 1.0.0
 main: me.nixuge.towers.Towers
+depend:
+- packetevents

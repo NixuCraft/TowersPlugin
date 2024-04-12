@@ -22,6 +22,15 @@ dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.9.4-R0.1-SNAPSHOT")
     // compileOnly("org.spigotmc:spigot-api:1.9.4-R0.1-SNAPSHOT")
 
+    // Scoreboard
+    val scoreboardLibraryVersion = "2.1.6"
+    implementation("net.megavex:scoreboard-library-api:$scoreboardLibraryVersion")
+    runtimeOnly("net.megavex:scoreboard-library-implementation:$scoreboardLibraryVersion")
+    runtimeOnly("net.megavex:scoreboard-library-packetevents:$scoreboardLibraryVersion")
+    
+    // Needed for scoreboard-library 
+    implementation("net.kyori:adventure-platform-bukkit:4.3.2")
+
     // Lombok (QOL)
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
