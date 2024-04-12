@@ -34,8 +34,8 @@ public class PlayerRespawnListener implements Listener {
                 // Note sure if this *needs* to be in a runnable:
                 p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
                 p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1));
-                // This needs to be un a runnable tho:
-                // TODO: GIVE STUFF !
+                // This needs to be in a runnable tho:
+                towersP.giveStuff();
             }
         }, 2);
     }

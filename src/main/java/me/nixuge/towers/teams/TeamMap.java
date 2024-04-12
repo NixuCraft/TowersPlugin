@@ -6,7 +6,7 @@ import org.bukkit.World;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import me.nixuge.configurator.maths.Area;
+import me.nixuge.nixutils.maths.Area;
 
 @RequiredArgsConstructor
 @Getter

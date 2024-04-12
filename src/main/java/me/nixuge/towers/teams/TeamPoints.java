@@ -6,7 +6,7 @@ import org.bukkit.World;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.nixuge.configurator.maths.Area;
+import me.nixuge.nixutils.maths.Area;
 import me.nixuge.towers.Towers;
 import me.nixuge.towers.scoreboard.ScoreboardSidebar;
 

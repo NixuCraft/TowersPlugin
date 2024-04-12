@@ -9,6 +9,7 @@ Not done:
 Goal armostand handling
 Proper no chest yoink
 Chest cooldown (?)
+Anti spawnkill (?, more cancer than anything, maybe as a config)
 
 To redo/improve:
 Chests overrall (refill only some chests, save chests by team, basically a TowerChest obj w props like "baseContent" "canEnemySteal", "refill", ...)

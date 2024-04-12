@@ -6,10 +6,10 @@ import java.util.Map;
 import org.bukkit.entity.Player;
 
 import lombok.val;
+import me.nixuge.nixutils.misc.Pair;
 import me.nixuge.towers.Towers;
 import me.nixuge.towers.teams.TeamPoints;
 import me.nixuge.towers.teams.TowersTeam;
-import me.nixuge.towers.utils.Pair;
 import net.kyori.adventure.text.Component;
 import net.megavex.scoreboardlibrary.api.sidebar.Sidebar;
 import net.megavex.scoreboardlibrary.api.sidebar.component.ComponentSidebarLayout;

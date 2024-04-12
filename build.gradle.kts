@@ -37,6 +37,7 @@ dependencies {
     
     // Custom libs
     val libsPath: String by project
+    implementation(files("${libsPath}/NixUtils-1.0.0-all.jar"))
     implementation(files("${libsPath}/Configurator-1.1.0-all.jar"))
     implementation(files("${libsPath}/VelocityHandler-1.0.0-all.jar"))
 }

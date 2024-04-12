@@ -48,9 +48,6 @@ public class Towers extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        
-        gameManager = new GameManager(this);
-        gameManager.startGame();
 
         new VelocityHandler(this, "towersgame");
 
@@ -60,6 +57,9 @@ public class Towers extends JavaPlugin {
             scoreboardLibrary = new NoopScoreboardLibrary();
             getLogger().warning("No scoreboard packet adapter available!");
         }
+
+        gameManager = new GameManager(this);
+        gameManager.startGame();
 
         // Only for debugging purposes after a /rl - should ideally be removed.
         Bukkit.getOnlinePlayers().forEach(p -> {

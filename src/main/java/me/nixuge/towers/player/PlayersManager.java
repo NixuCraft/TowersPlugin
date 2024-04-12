@@ -4,12 +4,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
 
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerEvent;
 
 import lombok.val;
-import me.nixuge.towers.scoreboard.ScoreboardSidebar;
 import me.nixuge.towers.teams.TowersTeam;
 
 public class PlayersManager {
@@ -35,10 +33,7 @@ public class PlayersManager {
         val newP = new TowersPlayer(p, team);
         uuidToTowersPlayer.put(p.getUniqueId(), newP);
 
-        // Player init tasks here - not sure if they should be moved.
-        p.teleport(team.getTeamMap().getSpawn());
-        p.setGameMode(GameMode.SURVIVAL);
-        ScoreboardSidebar.addSidebarToPlayer(p, team);
+        newP.init();
 
         return newP;
     }

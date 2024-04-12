@@ -9,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import me.nixuge.configurator.maths.Area;
+import me.nixuge.nixutils.maths.Area;
 import me.nixuge.towers.player.TowersPlayer;
 import me.nixuge.towers.teams.TeamMap;
 

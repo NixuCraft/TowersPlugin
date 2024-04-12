@@ -9,7 +9,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import me.nixuge.configurator.maths.Area;
+import me.nixuge.nixutils.maths.Area;
 import me.nixuge.towers.player.PlayersManager;
 import me.nixuge.towers.player.TowersPlayer;
 import me.nixuge.towers.teams.TeamPoints;
@@ -24,14 +24,20 @@ public class PlayerMoveListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player p = event.getPlayer();
+        TowersPlayer towerP = PlayersManager.getPlayer(p);
 
         Location to = event.getTo();
         if (to.getY() < 120) { // Bumped the limit a bit, was originally at 85. Might put in config.
             p.setLastDamageCause(new EntityDamageEvent(p, DamageCause.FALL, 20));
             p.setHealth(0);
+            // If this isn't there, we may send a few more move packets and trigger this multiple times.
+            // Just teleporting before the death/respawn to avoid that.
+            // Edit: this does not fix it lmao, for now leaving it like that.
+            p.teleport(towerP.getTeam().getTeamMap().getSpawn());
+            return;
         }
 
-        TowersPlayer towerP = PlayersManager.getPlayer(p);
+        
         TowersTeam team = towerP.getTeam();
 
         Area enemyGoalArea = team.getEnemyTeam().getTeamMap().getGoalArea();

@@ -11,12 +11,12 @@ import org.bukkit.scheduler.BukkitTask;
 
 import com.destroystokyo.paper.Title;
 
+import me.nixuge.nixutils.text.TextUtils;
 import me.nixuge.towers.Towers;
 import me.nixuge.towers.player.PlayersManager;
 import me.nixuge.towers.runnable.TowerRunnable;
 import me.nixuge.towers.scoreboard.ScoreboardSidebar;
 import me.nixuge.towers.teams.TowersTeam;
-import me.nixuge.towers.utils.TextUtils;
 import me.nixuge.towers.world.ChestManager;
 import me.nixuge.towers.world.IronGenerator;
 import me.nixuge.velocityhandler.messages.PlayerSwitchServerMessage;
