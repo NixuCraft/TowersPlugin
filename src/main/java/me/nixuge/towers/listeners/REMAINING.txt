@@ -1,0 +1,18 @@
+
+
+~ PlayerRespawn.java
+~ InventoryClick.java (InventoryClickEvent)
+
+ok - PlayerJoin.java (PlayerJoinEvent)
+ok - PlayerLeave.java (PlayerLeaveEvent)
+ok - PlayerMove.java (PlayerMoveEvent)
+
+Not done:
+Goal armostand handling
+Better end
+Proper no chest yoink
+Scoreboard
+Chest cooldown (?)
+
+To redo/improve:
+Chests overrall (refill only some chests, save chests by team, basically a TowerChest obj w props like "baseContent" "canEnemySteal", "refill", ...)
