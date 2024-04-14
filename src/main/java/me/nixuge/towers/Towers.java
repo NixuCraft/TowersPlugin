@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import lombok.Getter;
 import me.nixuge.towers.game.GameManager;
+import me.nixuge.towers.listeners.BlockPlaceBreakListener;
 import me.nixuge.towers.listeners.EnchantItemListener;
 import me.nixuge.towers.listeners.EntityDamageByEntityListener;
 import me.nixuge.towers.listeners.EntityExplodeListener;
@@ -17,7 +18,6 @@ import me.nixuge.towers.listeners.FoodLevelChangeListener;
 import me.nixuge.towers.listeners.InventoryListener;
 import me.nixuge.towers.listeners.PlayerDeathListener;
 import me.nixuge.towers.listeners.PlayerDropItemListener;
-import me.nixuge.towers.listeners.PlayerInteractAtEntityListener;
 import me.nixuge.towers.listeners.PlayerJoinListener;
 import me.nixuge.towers.listeners.PlayerMoveListener;
 import me.nixuge.towers.listeners.PlayerQuitListener;
@@ -33,7 +33,7 @@ public class Towers extends JavaPlugin {
         new EnchantItemListener(), new EntityDamageByEntityListener(),
         new EntityExplodeListener(), new FoodLevelChangeListener(),
         new InventoryListener(), new PlayerDeathListener(),
-        new PlayerDropItemListener(), new PlayerInteractAtEntityListener(),
+        new PlayerDropItemListener(), new BlockPlaceBreakListener(),
         new PlayerJoinListener(), new PlayerMoveListener(),
         new PlayerQuitListener(), new PlayerRespawnListener()
     );
