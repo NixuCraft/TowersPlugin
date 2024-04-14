@@ -11,8 +11,19 @@ import lombok.Getter;
 import lombok.val;
 
 public enum TowersTeam {
-    RED("Red", "\u00A7c", Color.fromBGR(0, 0, 255), TeamMap.getRedMap(), new TeamPoints()),
-    BLUE("Blue", "\u00A73", Color.fromBGR(255, 0, 0), TeamMap.getBlueMap(), new TeamPoints());
+    RED("Red", "\u00A7c", Color.fromBGR(0, 0, 255), TeamMap.getRedMap(), new TeamArmorStand(-80.5, 202.5, 0.5), new TeamPoints()),
+    BLUE("Blue", "\u00A73", Color.fromBGR(255, 0, 0), TeamMap.getBlueMap(), new TeamArmorStand(81.5, 202.5, 0.5), new TeamPoints());
+
+    static {
+        // Note: this relies on the fast statics are executed AFTER all the constructor for the enum values.
+        // Not sure if this is JVM dependant or not, but I certainly hope it's not.
+        // I can't use this in the constructor because updateName calls getEnemyTeam, which requires
+        // all teams to be constructed first.
+        TowersTeam[] teams = getAllTeams();
+        for (int i = 0; i < teams.length; i++) {
+            teams[i].getArmorStand().updateName();
+        }
+    }
 
     @Getter
     private final String displayName;
@@ -25,12 +36,16 @@ public enum TowersTeam {
     @Getter
     private final TeamPoints teamPoints;
     @Getter
+    private final TeamArmorStand armorStand;
+    @Getter
     private ItemStack[] armor;
-    TowersTeam(String displayName, String chatPrefix, Color color, TeamMap teamMap, TeamPoints teamPoints) {
+    TowersTeam(String displayName, String chatPrefix, Color color, TeamMap teamMap, TeamArmorStand armorStand, TeamPoints teamPoints) {
         this.displayName = displayName;
         this.chatPrefix = chatPrefix;
         this.color = color;
         this.teamMap = teamMap;
+        this.armorStand = armorStand;
+        this.armorStand.setTeam(this); // Same as TeamPoint. Note that this also needs an update in static{}
         this.teamPoints = teamPoints;
         this.teamPoints.setTeam(this); // Kinda dirty, can't set as TeamPoint arg.
         this.genArmor();

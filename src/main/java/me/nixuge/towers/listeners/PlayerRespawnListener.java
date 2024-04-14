@@ -29,14 +29,18 @@ public class PlayerRespawnListener implements Listener {
 
         event.setRespawnLocation(respawnLoc);
 
-        Bukkit.getScheduler().runTaskLater(Towers.getInstance(), new Runnable(){
-            public void run(){
-                // Note sure if this *needs* to be in a runnable:
-                p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
-                p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1));
-                // This needs to be in a runnable tho:
-                towersP.giveStuff();
-            }
-        }, 2);
+        // Bukkit.getScheduler().runTaskLater(Towers.getInstance(), new Runnable(){
+        //     public void run(){
+        //         // Note sure if this *needs* to be in a runnable:
+        //         p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
+        //         p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1));
+        //         // This needs to be in a runnable tho:
+        //         towersP.giveStuff();
+        //     }
+        // }, 2);
+        p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1));
+        // This needs to be in a runnable tho, edit: doesn't seem like it
+        towersP.giveStuff();
     }
 }

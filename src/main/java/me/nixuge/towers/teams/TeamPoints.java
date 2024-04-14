@@ -11,9 +11,14 @@ import me.nixuge.towers.Towers;
 import me.nixuge.towers.scoreboard.ScoreboardSidebar;
 
 public class TeamPoints {
+    public enum ScorePointResult {
+        SUCCESS,
+        WAIT,
+        MAX_POINTS
+    }
     @Getter
-    // private static final int MAX_POINTS = 3; // TODO: LOAD FROM CONFIG OR SOMEWHERE
-    private static final int MAX_POINTS = 1; // TODO: LOAD FROM CONFIG OR SOMEWHERE
+    private static final int MAX_POINTS = 3; // TODO: LOAD FROM CONFIG OR SOMEWHERE
+    // private static final int MAX_POINTS = 1; // TODO: LOAD FROM CONFIG OR SOMEWHERE
     private static final int SECONDS_BETWEEN_POINTS = 30;
     private static final World world = Bukkit.getWorld("world");
     
@@ -34,16 +39,16 @@ public class TeamPoints {
         return SECONDS_BETWEEN_POINTS - (int)((System.currentTimeMillis() - this.lastPointTime) / 1000);
     }
 
-    public boolean scorePoint() {
+    public ScorePointResult scorePoint() {
         // Just making sure, in case someone wants to usebug in.
         if (getSecondsBeforeNewPoint() > 0)
-            return false;
+            return ScorePointResult.WAIT;
         
         this.points++;
         ScoreboardSidebar.updateSidebars();
+        team.getEnemyTeam().getArmorStand().updateName();
         if (this.points >= MAX_POINTS) {
-            Towers.getGameManager().endGame(team);
-            return true;
+            return ScorePointResult.MAX_POINTS;
         }
 
         Area goalArea = team.getTeamMap().getGoalArea();
@@ -52,6 +57,6 @@ public class TeamPoints {
             goalArea.fill(world, Material.AIR);
         }, SECONDS_BETWEEN_POINTS);
 
-        return true;
+        return ScorePointResult.SUCCESS;
     }
 }

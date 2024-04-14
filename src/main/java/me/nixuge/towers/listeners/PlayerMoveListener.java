@@ -10,10 +10,12 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.nixuge.nixutils.maths.Area;
+import me.nixuge.towers.Towers;
 import me.nixuge.towers.player.PlayersManager;
 import me.nixuge.towers.player.TowersPlayer;
 import me.nixuge.towers.teams.TeamPoints;
 import me.nixuge.towers.teams.TowersTeam;
+import me.nixuge.towers.teams.TeamPoints.ScorePointResult;
 
 public class PlayerMoveListener implements Listener {
     // TODO?: bound checks
@@ -45,13 +47,20 @@ public class PlayerMoveListener implements Listener {
             return;
 
         TeamPoints teamPoints = team.getTeamPoints();
-        if (!teamPoints.scorePoint()) {
-            p.sendMessage("You stil need to wait " + teamPoints.getSecondsBeforeNewPoint() + "s before scoring again.");
-            p.teleport(p.getLocation().add(0, 1, 0)); // Tp 1 block up to unstuck from the bedrock.
-            return;
+        ScorePointResult pointRes = teamPoints.scorePoint();
+        switch (pointRes) {
+            case WAIT:
+                p.sendMessage("You stil need to wait " + teamPoints.getSecondsBeforeNewPoint() + "s before scoring again.");
+                p.teleport(p.getLocation().add(0, 1, 0)); // Tp 1 block up to unstuck from the bedrock.
+                return;
+            case SUCCESS:
+                Bukkit.broadcastMessage(towerP.getColouredName() + " scored a point.");
+                p.teleport(team.getTeamMap().getSpawn());
+                return;
+            case MAX_POINTS:
+                Bukkit.broadcastMessage(towerP.getColouredName() + " scored a point.");
+                Towers.getGameManager().endGame(team);
+                return;
         }
-
-        p.teleport(team.getTeamMap().getSpawn());
-        Bukkit.broadcastMessage(towerP.getColouredName() + " scored a point.");
     }
 }
