@@ -49,7 +49,7 @@ public class Towers extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        new VelocityHandler(this, "towersgame");
+        new VelocityHandler(this, "gameserver");
 
         try {
             scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(this);

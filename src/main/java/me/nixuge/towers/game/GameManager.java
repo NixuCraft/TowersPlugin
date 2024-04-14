@@ -86,14 +86,15 @@ public class GameManager {
             p.sendMessage("Game took " + getFormattedGameTime());
         });
 
-
         // IMPORTANT NOTE: IF ALL PLAYERS LEFT, THIS MEANS THIS WON'T WORK !
         // THIS CAN MAKE SERVERS KEEP RUNNING FOR NO REASON !
         // COULD USE THE HTTP API DIRECTLY TO BE GOOD.
         new ShutdownSelfMessage(20).sendMessage();
-
+        
         Bukkit.getServer().getScheduler().runTaskLater(Towers.getInstance(), () -> {
-            new PlayerSwitchServerMessage("lobby").sendMessage();
+            Bukkit.getOnlinePlayers().forEach(
+                p -> new PlayerSwitchServerMessage("lobby").sendMessage(p)
+            );
         }, 300); // 15s
     }
 }

@@ -20,6 +20,7 @@ public class TeamArmorStand {
     }
 
     public TeamArmorStand(Location loc) {
+        loc.getChunk().load(false); // required to spawn an entity
         armorStand = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
         armorStand.setGravity(false);
         armorStand.setVisible(false);
