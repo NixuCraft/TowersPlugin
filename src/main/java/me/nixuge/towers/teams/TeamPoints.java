@@ -45,17 +45,18 @@ public class TeamPoints {
             return ScorePointResult.WAIT;
         
         this.points++;
+        this.lastPointTime = System.currentTimeMillis();
         ScoreboardSidebar.updateSidebars();
         team.getEnemyTeam().getArmorStand().updateName();
         if (this.points >= MAX_POINTS) {
             return ScorePointResult.MAX_POINTS;
         }
 
-        Area goalArea = team.getTeamMap().getGoalArea();
+        Area goalArea = team.getEnemyTeam().getTeamMap().getGoalArea();
         goalArea.fill(world, Material.BEDROCK);
         Bukkit.getScheduler().runTaskLater(Towers.getInstance(), () -> {
             goalArea.fill(world, Material.AIR);
-        }, SECONDS_BETWEEN_POINTS);
+        }, SECONDS_BETWEEN_POINTS * 20);
 
         return ScorePointResult.SUCCESS;
     }
